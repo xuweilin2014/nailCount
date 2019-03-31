@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>icons/Excel文件.png</file>
+        <file>icons/计数.png</file>
+        <file>icons/上传图片.png</file>
+        <file>icons/摄像.png</file>
+        <file>icons/类型.png</file>
+    </qresource>
+    <qresource prefix="/box_image"/>
+</RCC>
