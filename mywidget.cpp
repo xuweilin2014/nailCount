@@ -45,12 +45,12 @@ void MyWidget::initButtonIcon(){
     film->setIconSize(QSize(30,30));
     film->setFlat(true);
 
-    //设置生成Excel文档按钮的Icon
-    QPushButton* genExcel = ui->genExcel;
-    QIcon iconGenExcel(":/icon/icons/Excel文件.png");
-    genExcel->setIcon(iconGenExcel);
-    genExcel->setIconSize(QSize(30,30));
-    genExcel->setFlat(true);
+    //设置生成Json文档按钮的Icon
+    //QPushButton* genJson = ui->genJson;
+    //QIcon iconGenExcel(":/icon/icons/json.png");
+    //genJson->setIcon(iconGenExcel);
+    //genJson->setIconSize(QSize(30,30));
+    //genJson->setFlat(true);
 
     //设置计数按钮的Icon
     QPushButton* nailCount = ui->nailCount;
@@ -157,8 +157,8 @@ void MyWidget::on_nailCount_clicked()
 	}
 	else {
 		if (boxType == "DVR") {
-			DVRDialog* dvrDialog = new DVRDialog(this);
-			dvrDialog->setNailNumOnDialog(nailNums);
+			DVRDialog* dvrDialog = new DVRDialog(nailNums,this);
+			dvrDialog->setNailNumOnDialog();
 			int ret = dvrDialog->exec();
 			delete dvrDialog;
 		}
@@ -172,7 +172,7 @@ void MyWidget::on_nailCount_clicked()
 
 //生成一个非模态的对话窗口
 void MyWidget::showInfoDialogNonModal(const QString& title, const QString& info) {
-	InformatioDialog* infoDialog = new InformatioDialog(this);
+	InformatioDialog* infoDialog = new InformatioDialog();
 	infoDialog->setAttribute(Qt::WA_DeleteOnClose);
 	infoDialog->setInfo(info);
 	infoDialog->setWindowTitle(title);
@@ -181,9 +181,10 @@ void MyWidget::showInfoDialogNonModal(const QString& title, const QString& info)
 
 //生成一个模态的对话窗口
 void MyWidget::showInfoDialogModal(const QString& title, const QString& info) {
-	InformatioDialog* infoDialog = new InformatioDialog(this);
+	InformatioDialog* infoDialog = new InformatioDialog();
 	infoDialog->setInfo(info);
 	infoDialog->setWindowTitle(title);
 	infoDialog->exec();
 	delete infoDialog;
 }
+

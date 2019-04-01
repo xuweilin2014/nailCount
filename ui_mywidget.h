@@ -38,9 +38,6 @@ public:
     QVBoxLayout *verticalLayout_2;
     QPushButton *film;
     QLabel *label_2;
-    QVBoxLayout *verticalLayout_3;
-    QPushButton *genExcel;
-    QLabel *label_3;
     QVBoxLayout *verticalLayout_4;
     QPushButton *nailCount;
     QLabel *label_4;
@@ -68,7 +65,7 @@ public:
         line_2->setFrameShadow(QFrame::Sunken);
         layoutWidget = new QWidget(MyWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(34, 10, 401, 61));
+        layoutWidget->setGeometry(QRect(70, 10, 401, 61));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -84,6 +81,10 @@ public:
 
         label = new QLabel(layoutWidget);
         label->setObjectName(QStringLiteral("label"));
+        QFont font;
+        font.setFamily(QString::fromUtf8("\345\276\256\350\275\257\351\233\205\351\273\221"));
+        label->setFont(font);
+        label->setAlignment(Qt::AlignJustify|Qt::AlignVCenter);
 
         verticalLayout->addWidget(label);
 
@@ -100,27 +101,13 @@ public:
 
         label_2 = new QLabel(layoutWidget);
         label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setFont(font);
+        label_2->setAlignment(Qt::AlignJustify|Qt::AlignVCenter);
 
         verticalLayout_2->addWidget(label_2);
 
 
         horizontalLayout->addLayout(verticalLayout_2);
-
-        verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        genExcel = new QPushButton(layoutWidget);
-        genExcel->setObjectName(QStringLiteral("genExcel"));
-
-        verticalLayout_3->addWidget(genExcel);
-
-        label_3 = new QLabel(layoutWidget);
-        label_3->setObjectName(QStringLiteral("label_3"));
-
-        verticalLayout_3->addWidget(label_3);
-
-
-        horizontalLayout->addLayout(verticalLayout_3);
 
         verticalLayout_4 = new QVBoxLayout();
         verticalLayout_4->setSpacing(6);
@@ -132,6 +119,8 @@ public:
 
         label_4 = new QLabel(layoutWidget);
         label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setFont(font);
+        label_4->setAlignment(Qt::AlignJustify|Qt::AlignVCenter);
 
         verticalLayout_4->addWidget(label_4);
 
@@ -148,6 +137,8 @@ public:
 
         label_5 = new QLabel(layoutWidget);
         label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setFont(font);
+        label_5->setAlignment(Qt::AlignJustify|Qt::AlignVCenter);
 
         verticalLayout_5->addWidget(label_5);
 
@@ -164,15 +155,13 @@ public:
     {
         MyWidget->setWindowTitle(QApplication::translate("MyWidget", "\351\222\211\345\255\220\350\256\241\346\225\260", Q_NULLPTR));
         uploadImage->setText(QString());
-        label->setText(QApplication::translate("MyWidget", "  \344\270\212\344\274\240\345\233\276\347\211\207", Q_NULLPTR));
+        label->setText(QApplication::translate("MyWidget", "     \344\270\212\344\274\240\345\233\276\347\211\207", Q_NULLPTR));
         film->setText(QString());
-        label_2->setText(QApplication::translate("MyWidget", "    \346\221\204\345\203\217", Q_NULLPTR));
-        genExcel->setText(QString());
-        label_3->setText(QApplication::translate("MyWidget", "  \347\224\237\346\210\220Excel", Q_NULLPTR));
+        label_2->setText(QApplication::translate("MyWidget", "        \346\221\204\345\203\217", Q_NULLPTR));
         nailCount->setText(QString());
-        label_4->setText(QApplication::translate("MyWidget", "    \350\256\241\346\225\260", Q_NULLPTR));
+        label_4->setText(QApplication::translate("MyWidget", "         \350\256\241\346\225\260", Q_NULLPTR));
         boxType->setText(QString());
-        label_5->setText(QApplication::translate("MyWidget", "  \347\233\222\345\255\220\347\261\273\345\236\213", Q_NULLPTR));
+        label_5->setText(QApplication::translate("MyWidget", "     \347\233\222\345\255\220\347\261\273\345\236\213", Q_NULLPTR));
     } // retranslateUi
 
 };

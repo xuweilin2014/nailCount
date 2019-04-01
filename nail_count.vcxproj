@@ -235,6 +235,7 @@
       <Define Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_WINDOWS;UNICODE;_UNICODE;WIN32;WIN64;QT_DEPRECATED_WARNINGS;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;%(PreprocessorDefinitions)</Define>
     </QtMoc>
     <ClInclude Include="nailcount.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ui_dvrdialog.h" />
     <ClInclude Include="ui_mywidget.h" />
   </ItemGroup>
@@ -264,6 +265,13 @@
     <None Include="icons\Excel??.png" />
     <QtRcc Include="icons.qrc">
     </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="nail_count.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
+    <Image Include="icons\json.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

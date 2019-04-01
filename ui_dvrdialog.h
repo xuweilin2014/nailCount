@@ -53,8 +53,8 @@ public:
     QHBoxLayout *horizontalLayout_8;
     QLabel *labelP;
     QLineEdit *lineP;
-    QPushButton *buttonOK;
-    QPushButton *buttonCancel;
+    QPushButton *buttonSave;
+    QPushButton *buttonClose;
 
     void setupUi(QDialog *DVRDialog)
     {
@@ -209,16 +209,16 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_8);
 
-        buttonOK = new QPushButton(DVRDialog);
-        buttonOK->setObjectName(QStringLiteral("buttonOK"));
-        buttonOK->setGeometry(QRect(40, 330, 61, 31));
-        buttonCancel = new QPushButton(DVRDialog);
-        buttonCancel->setObjectName(QStringLiteral("buttonCancel"));
-        buttonCancel->setGeometry(QRect(200, 330, 61, 31));
+        buttonSave = new QPushButton(DVRDialog);
+        buttonSave->setObjectName(QStringLiteral("buttonSave"));
+        buttonSave->setGeometry(QRect(40, 330, 61, 31));
+        buttonClose = new QPushButton(DVRDialog);
+        buttonClose->setObjectName(QStringLiteral("buttonClose"));
+        buttonClose->setGeometry(QRect(200, 330, 61, 31));
 
         retranslateUi(DVRDialog);
-        QObject::connect(buttonOK, SIGNAL(clicked()), DVRDialog, SLOT(accept()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()), DVRDialog, SLOT(reject()));
+        QObject::connect(buttonSave, SIGNAL(clicked()), DVRDialog, SLOT(accept()));
+        QObject::connect(buttonClose, SIGNAL(clicked()), DVRDialog, SLOT(reject()));
 
         QMetaObject::connectSlotsByName(DVRDialog);
     } // setupUi
@@ -234,8 +234,8 @@ public:
         labelMDTP->setText(QApplication::translate("DVRDialog", "MDTP\345\214\272\346\225\260\347\233\256\357\274\232", Q_NULLPTR));
         labelTP->setText(QApplication::translate("DVRDialog", "TP\345\214\272\346\225\260\347\233\256\357\274\232", Q_NULLPTR));
         labelP->setText(QApplication::translate("DVRDialog", "P\345\214\272\346\225\260\347\233\256\357\274\232", Q_NULLPTR));
-        buttonOK->setText(QApplication::translate("DVRDialog", "\347\241\256\345\256\232", Q_NULLPTR));
-        buttonCancel->setText(QApplication::translate("DVRDialog", "\345\217\226\346\266\210", Q_NULLPTR));
+        buttonSave->setText(QApplication::translate("DVRDialog", "\344\277\235\345\255\230", Q_NULLPTR));
+        buttonClose->setText(QApplication::translate("DVRDialog", "\345\205\263\351\227\255", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -135,10 +135,30 @@
     <None Include="boxType.json" />
     <None Include="icons\??.png" />
     <None Include="icons\??.png" />
+    <None Include="icons\类型.png" />
+    <None Include="icons\计数.png" />
+    <None Include="icons\类型.png" />
+    <None Include="icons\计数.png" />
+    <None Include="icons\??.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="icons\??.png">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="nailcount.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="nail_count.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
+    <Image Include="icons\json.png" />
   </ItemGroup>
 </Project>

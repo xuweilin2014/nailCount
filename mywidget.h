@@ -20,8 +20,8 @@ class MyWidget : public QWidget
 public:
     explicit MyWidget(QWidget *parent = 0);
 	void initButtonIcon();
-	void showInfoDialogNonModal(const QString& title,const QString& info);
-	void showInfoDialogModal(const QString& title, const QString& info);
+	static void showInfoDialogNonModal(const QString& title,const QString& info);
+	static void showInfoDialogModal(const QString& title, const QString& info);
     ~MyWidget();
 
 private slots:

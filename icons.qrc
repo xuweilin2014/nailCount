@@ -5,6 +5,7 @@
         <file>icons/上传图片.png</file>
         <file>icons/摄像.png</file>
         <file>icons/类型.png</file>
+        <file>icons/json.png</file>
     </qresource>
     <qresource prefix="/box_image"/>
 </RCC>

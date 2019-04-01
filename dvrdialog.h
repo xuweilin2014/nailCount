@@ -16,12 +16,14 @@ class DVRDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit DVRDialog(QWidget *parent = 0);
-	void setNailNumOnDialog( map<string, int>& nailNums);
+	explicit DVRDialog(map<string, int>& nailNums, QWidget *parent = 0);
+	void setNailNumOnDialog();
+	void saveNailNumsAsJson();
     ~DVRDialog();
 
 private:
     Ui::DVRDialog *ui;
+	map<string, int> nailNums;
 };
 
 #endif // DVRDIALOG_H
