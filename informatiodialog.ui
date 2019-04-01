@@ -29,7 +29,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="buttonOK">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -42,7 +42,7 @@
     <string>确定</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="buttonCancel">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -57,5 +57,38 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>buttonOK</sender>
+   <signal>clicked()</signal>
+   <receiver>InformatioDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>115</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>125</x>
+     <y>74</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>InformatioDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>180</x>
+     <y>115</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>125</x>
+     <y>74</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

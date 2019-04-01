@@ -24,8 +24,8 @@ class Ui_InformatioDialog
 {
 public:
     QLabel *infoLabel;
-    QPushButton *pushButton;
-    QPushButton *pushButton_2;
+    QPushButton *buttonOK;
+    QPushButton *buttonCancel;
 
     void setupUi(QDialog *InformatioDialog)
     {
@@ -36,14 +36,16 @@ public:
         infoLabel->setObjectName(QStringLiteral("infoLabel"));
         infoLabel->setGeometry(QRect(40, 30, 161, 41));
         infoLabel->setAlignment(Qt::AlignCenter);
-        pushButton = new QPushButton(InformatioDialog);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(30, 100, 61, 31));
-        pushButton_2 = new QPushButton(InformatioDialog);
-        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(150, 100, 61, 31));
+        buttonOK = new QPushButton(InformatioDialog);
+        buttonOK->setObjectName(QStringLiteral("buttonOK"));
+        buttonOK->setGeometry(QRect(30, 100, 61, 31));
+        buttonCancel = new QPushButton(InformatioDialog);
+        buttonCancel->setObjectName(QStringLiteral("buttonCancel"));
+        buttonCancel->setGeometry(QRect(150, 100, 61, 31));
 
         retranslateUi(InformatioDialog);
+        QObject::connect(buttonOK, SIGNAL(clicked()), InformatioDialog, SLOT(accept()));
+        QObject::connect(buttonCancel, SIGNAL(clicked()), InformatioDialog, SLOT(reject()));
 
         QMetaObject::connectSlotsByName(InformatioDialog);
     } // setupUi
@@ -52,8 +54,8 @@ public:
     {
         InformatioDialog->setWindowTitle(QApplication::translate("InformatioDialog", "Dialog", Q_NULLPTR));
         infoLabel->setText(QString());
-        pushButton->setText(QApplication::translate("InformatioDialog", "\347\241\256\345\256\232", Q_NULLPTR));
-        pushButton_2->setText(QApplication::translate("InformatioDialog", "\345\217\226\346\266\210", Q_NULLPTR));
+        buttonOK->setText(QApplication::translate("InformatioDialog", "\347\241\256\345\256\232", Q_NULLPTR));
+        buttonCancel->setText(QApplication::translate("InformatioDialog", "\345\217\226\346\266\210", Q_NULLPTR));
     } // retranslateUi
 
 };
