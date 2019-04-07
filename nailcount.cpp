@@ -288,7 +288,7 @@ map<string,int> boxDVR(Mat image) {
 	map<string, Mat>::iterator iter = colorImageDict.begin();
 	vector<Mat> lines;
 	for (int i = 0; iter != colorImageDict.end(); iter++, i++) {
-		string path = "F:\\" + iter->first + "_tem.jpg";
+		string path = "template_image\\" + iter->first + "_tem.jpg";
 		Mat temp = imread(path, 0);
 		int blockNum = 0;
 		if (iter->first == "UCS") {

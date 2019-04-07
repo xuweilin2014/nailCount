@@ -57,7 +57,7 @@ void DVRDialog::saveNailNumsAsJson() {
 		bool isOk = jsonFile.open(QIODevice::WriteOnly);
 		if (isOk == true) {
 			jsonFile.write(jsonStr.toUtf8());
-			MyWidget::showInfoDialogModal("提示", "保存成功！");
+			MyWidget::showInfoDialogModal("提示", "保存成功!");
 			//弹出一个对话框，内容为"保存成功！"
 		}
 		else {
