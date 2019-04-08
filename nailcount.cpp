@@ -5,6 +5,7 @@
 #include <opencv2/opencv.hpp>
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
+#include "nailcount.h"
 
 using namespace std;
 using namespace cv;
@@ -14,8 +15,8 @@ vector<string> COLORLIST;
 vector<string> BOXTYPE;
 map<string, int> HOLELIST;
 map<string, int> LINELIST;
-map<string, int> SEGLIST;
 int counter = 0;
+int index = 0;
 
 bool PointSort(const Point p1, const Point p2) {
 	return p1.x < p2.x;
@@ -160,9 +161,6 @@ void findBoxDetail(string boxName) {
 					else if (i == 1) {
 						HOLELIST[key] = num[i].GetInt();
 					}
-					else if (i == 2) {
-						SEGLIST[key] = num[i].GetInt();
-					}
 				}
 			}
 		}
@@ -213,7 +211,7 @@ int temMatch(Mat& line_image, Mat& temp_image) {
 
 	for (int x = 0; x < result.cols; x++) {
 		for (int y = 0; y < result.rows; y++) {
-			if ((result.at<float>(y, x)) > 0.7) {
+			if ((result.at<float>(y, x)) > 0.73) {
 				x_loc.push_back(x);
 			}
 		}
@@ -260,7 +258,7 @@ int temMatchForUCS(Mat& line_image, Mat& temp_image) {
 
 	for (int x = 0; x < result.cols; x++) {
 		for (int y = 0; y < result.rows; y++) {
-			if ((result.at<float>(y, x)) > 0.4) {
+			if ((result.at<float>(y, x)) > 0.2) {
 				y_loc.push_back(y);
 			}
 		}
@@ -287,17 +285,19 @@ map<string,int> boxDVR(Mat image) {
 	map<string,int> nailNums;
 	map<string, Mat>::iterator iter = colorImageDict.begin();
 	vector<Mat> lines;
+	int* heightArray;
 	for (int i = 0; iter != colorImageDict.end(); iter++, i++) {
 		string path = "template_image\\" + iter->first + "_tem.jpg";
 		Mat temp = imread(path, 0);
+		Mat blockImg = iter->second;
+		heightArray = horizontalProjection(blockImg, iter->first);
+		lines = cropLineByProjection(heightArray, blockImg);
 		int blockNum = 0;
 		if (iter->first == "UCS") {
-			Mat src = colorImageDict[iter->first];
-			blockNum += temMatchForUCS(src, temp);
+			blockNum += temMatchForUCS(blockImg, temp);
 			nailNums[iter->first] = LINELIST[iter->first] * HOLELIST[iter->first] - blockNum;
 		}
 		else {
-			lines = cropLineByPercent(SEGLIST[iter->first], iter->second, iter->first);
 			vector<Mat>::iterator line_iter = lines.begin();
 			for (; line_iter != lines.end(); line_iter++) {
 				Mat src = *line_iter;
@@ -306,6 +306,7 @@ map<string,int> boxDVR(Mat image) {
 			nailNums[iter->first] = LINELIST[iter->first] * HOLELIST[iter->first] - blockNum;
 		}
 	}
+	delete heightArray;
 	return nailNums;
 }
 
@@ -331,4 +332,99 @@ int boxPOLYX(Mat image,string color) {
 	morphologyEx(opening, erosion, MORPH_OPEN, kernel, Point(-1, -1), 2);
 	findContours(erosion, points, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, Point(-1, -1));
 	return points.size();
+}
+
+int* horizontalProjection(Mat& blockImg,string nailType) {
+
+	int height = blockImg.rows;
+	int width = blockImg.cols;
+	int* heightArray = new int[height] {0};
+
+	Mat dst;
+	//二值化图像的保存路径
+	string binaryImgPath = "binary_image/binary_image_" + nailType + ".jpg";
+	//水平投影示意图的保存路径
+	string projection_img = "projection_image/projection_" + nailType + ".jpg";
+	threshold(blockImg, dst, 130, 255, THRESH_BINARY);
+	//保存二值图像
+	imwrite(binaryImgPath, dst);
+
+	Mat pad(height, width, CV_8UC1);
+
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			pad.at<uchar>(i, j) = 255;
+		}
+	}
+
+	for (int y = 0; y < height; y++) {
+		int counter = 0;
+		for (int x = 0; x < width; x++) {
+			if (dst.at<uchar>(y, x) == 0) {
+				if (counter > 92) {
+					heightArray[y] += 1;
+				}
+				counter++;
+			}
+		}
+	}
+
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < heightArray[y]; x++) {
+			pad.at<uchar>(y, x) = 0;
+		}
+	}
+		//保存投影图像
+	imwrite(projection_img, pad);
+	return heightArray;
+}
+
+vector<Mat> cropLineByProjection(int* heightArray, Mat& img) {
+	int firstY = 0, lastY = 0;
+	int firstYBackUp = firstY, lastYBackUp = lastY;
+	int rectStartY = (firstY + lastY) / 2;
+	bool isFirst = true, isInNail = false, isOutNail = true;
+	vector<Mat> lineList;
+
+	for (int y = 0; y < img.rows; y++) {
+		if (heightArray[y] > 0 && isFirst && isOutNail) {
+			firstY = y;
+			isFirst = false;
+			isInNail = true;
+			isOutNail = false;
+		}
+		else if (heightArray[y] == 0 && isInNail) {
+			int lineHeight = y - firstY;
+			if (lineHeight > 15) {
+				lastYBackUp = lastY;
+				lastY = y;
+			}
+			else {
+				firstY = firstYBackUp;
+				rectStartY = (firstY + lastYBackUp) / 2;
+			}
+			isInNail = false;
+			isOutNail = true;
+		}
+		else if (heightArray[y] > 0 && isOutNail && !isFirst) {
+			firstYBackUp = firstY;
+			firstY = y;
+			Rect rect(0, rectStartY, img.cols, (firstY + lastY) / 2 - rectStartY);
+			Mat aLineImg = img(rect);
+			string path = "temp_image/line" + to_string(index++) + ".jpg";
+			lineList.push_back(aLineImg);
+			imwrite(path, aLineImg);
+			rectStartY = (firstY + lastY) / 2;
+			isInNail = true;
+			isOutNail = false;
+		}
+	}
+
+	Rect rect(0, rectStartY, img.cols, img.rows - rectStartY);
+	Mat aLineImg = img(rect);
+	string path = "temp_image/line" + to_string(index++) + ".jpg";
+	lineList.push_back(aLineImg);
+	imwrite(path, aLineImg);
+
+	return lineList;
 }
